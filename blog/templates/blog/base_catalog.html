@@ -1,0 +1,26 @@
+{% extends 'blog/new-base.html' %}
+
+
+{% block content %}
+
+
+
+		<div id="catalogNav" class="catalogNav-down">
+			<div class="catalogNavBlock" {% if not category %} class="selected" {% endif %}>
+				<a href="{% url "blog:ProductList" %}" class="catalogNavA">Все</a>
+				{% for cat in categories %}
+					<a href=""{% if category.slug == cat.slug %} class="selected" {% endif %}></a>
+					<a href="{{ cat.get_absolute_url }}" class="catalogNavA">{{ cat.name }}</a>
+					<a href="{{ cat.get_absolute_url }}"><img src="{% if cat.image %}{{ cat.image.url }}{% else %}{% endif %}" class="catImage"></img></a>
+				{% endfor %}
+			</div>
+		</div>
+
+
+		<div class="catalogItems full-width-device">
+			{% block product_list %}{% endblock %}
+		</div>
+
+
+
+{% endblock content %}

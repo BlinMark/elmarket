@@ -1,0 +1,23 @@
+{% extends 'blog/base_catalog.html' %}
+
+{% load static %}
+
+{% block title %}
+  {% if category %} {{ category.name }} {% else %} Каталог {% endif %}
+{% endblock %}
+
+{% block product_list %}
+{% include "blog/list_page.html" %}
+
+{% block js %}
+    {{ block.super }}
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <script src="{{ STATIC_URL }}endless_pagination/js/endless-pagination.js"></script>
+    <script>$.endlessPaginate({
+      onClick: function(context){
+
+      }
+        });</script>
+{% endblock %}
+
+{% endblock %}

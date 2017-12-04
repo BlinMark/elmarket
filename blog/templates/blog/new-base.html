@@ -1,0 +1,88 @@
+{% load staticfiles %}
+{% load gtm_tags %}
+<html>
+<head>
+	<title>El'Market</title>
+ 	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no">
+	<link rel="stylesheet" href="{% static 'css/about.css' %}">
+	<link rel="stylesheet" href="{% static 'css/footer.css' %}">
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700" rel="stylesheet">
+	{% block logo %}{% include "blog/ico.html" %}{% endblock %}
+</head>
+<body>
+	{% gtm %}
+	<div class="navbar-fixed">
+		<nav class="nav nav-down">
+			<div class="nav-wrapper">
+				<a href="{% url 'blog:index' %}" class="brand-logo">El'Market</a>
+				<a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+				<ul class="right hide-on-med-and-down">
+					<li><a href="{% url 'blog:index' %}">Home</a></li>
+					<li><a href="{% url 'blog:ProductList' %}">Catalog</a></li>
+					<li><a href="{% url 'blog:about' %}">About</a></li>
+					<li>
+						<div id="cart">
+							{% with total_items=cart|length %}
+								{% if cart|length > 0 %}
+								<a href="{% url "cart:CartDetail" %}"
+								class="tooltipped"
+								data-position="bottom" data-delay="50"
+								data-tooltip="More deteil">
+								Your cart: {{ total_items }} items [{{ cart.get_total_price }} BYN]
+								</a>
+								{% else %}
+									<a href="#" onclick="Materialize.toast('Cart is empty', 4000)">Cart</a>
+								{% endif %}
+					    {% endwith %}
+						</div>
+					</li>
+					{% if user.is_authenticated %}
+						<li class="bg-color-red"><a href="{% url 'blog:admin' %}">Admin panel</a></li>
+					{% endif %}
+				</ul>
+
+				<ul class="side-nav" id="mobile-demo">
+					<li><a href="{% url 'blog:index' %}">Home</a></li>
+					<li><a href="{% url 'blog:ProductList' %}">Catalog</a></li>
+					<li><a href="{% url 'blog:about' %}">About</a></li>
+				</ul>
+			</div>
+		</nav>
+	</div>
+
+	<div class="content_section">
+		{% block content %}
+		{% endblock %}
+	</div>
+
+	{% block footer %}{% include "blog/footer.html" %}{% endblock %}
+	<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+	<script type="text/javascript">
+		$(".button-collapse").sideNav();
+	</script>
+	<script>
+		$(function(){
+			$(window).scroll(function() {
+				if($(this).scrollTop() >= 300) {
+				$('nav').addClass('nav-up');
+				$('nav').removeClass('nav-down');
+				$('#catalogNav').addClass('catalogNav-up');
+				$('#catalogNav').removeClass('catalogNav-down');
+
+				}
+
+				else{
+				$('nav').removeClass('nav-up');
+				$('nav').addClass('nav-down');
+				$('#catalogNav').removeClass('catalogNav-up');
+				$('#catalogNav').addClass('catalogNav-down');
+				}
+			});
+		});
+	</script>
+</body>
+</html>

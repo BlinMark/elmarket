@@ -1,0 +1,22 @@
+{% extends 'blog/new-base.html' %}
+{% load staticfiles%}
+
+{% block content %}
+
+<center>
+<div class="card card1">
+	<div class="card-image waves-effect waves-block waves-light">
+		<iframe width="560" height="315" src="https://www.youtube.com/embed/Zqn41lMIGg8" frameborder="0" allowfullscreen></iframe>
+	</div>
+	<div class="card-content">
+		<span class="card-title activator grey-text text-darken-4">Good breakfast is a good day</span>
+	</div>
+</div>
+</center>
+
+
+<center><a href="{% url 'blog:ProductList' %}" class="waves-effect waves-light btn red darken-2">Catalog</a></center>
+
+
+
+{% endblock content %}

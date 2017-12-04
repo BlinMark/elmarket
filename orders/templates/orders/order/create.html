@@ -1,0 +1,57 @@
+{% extends 'blog/new-base.html' %}
+{% load staticfiles %}
+{% load widget_tweaks %}
+
+
+{% block content %}
+<div class="row">
+	<div class="col s12 m6 center float-none">
+		<form class="col s12" id="order" action="." method="post">
+			<div class="card defoult-bg darken-1"  id="submitButtons">
+				<div class="card-content white-text">
+					<span class="card-title center">Personal data</span>
+					<div class="row">
+		        <div class="input-field col s4 full-width-device">
+		          {% render_field form.first_name type="text" class+="validate" id="first_name" %}
+		          <label for="first_name">Name</label>
+		        </div>
+		        <div class="input-field col s4 full-width-device">
+		          {% render_field form.phone type="tel" class+="validate" id="phone" %}
+		          <label for="phone">Phone</label>
+		        </div>
+						<div class="input-field col s4 full-width-device">
+							{% render_field form.email class+="validate" type="email" id="email"%}
+		          <label for="email">Email</label>
+		        </div>
+		      </div>
+					<span class="card-title center">Adress</span>
+					<div class="row">
+		        <div class="input-field col s3 full-width-device">
+							{% render_field form.street type="text" class+="validate" id="street" %}
+		          <label for="street">Street</label>
+		        </div>
+						<div class="input-field col s3 third-width-device">
+							{% render_field form.home type="text" class+="validate" id="home" %}
+		          <label for="home">House</label>
+		        </div>
+		        <div class="input-field col s3 third-width-device">
+							{% render_field form.korpus type="text" class+="validate" id="korpus" %}
+		          <label for="korpus">Building</label>
+		        </div>
+						<div class="input-field col s3 third-width-device">
+							{% render_field form.flat type="text" class+="validate" id="flat" %}
+		          <label for="flat">Flat</label>
+		        </div>
+		      </div>
+				</div>
+				{% csrf_token %}
+				<input type="submit" form="order" id="preorderButton" value="Подтвердить заказ">
+				<label id="preorderButtonLabel" class="waves-effect waves-light btn red darken-2" for="preorderButton">
+					Подтвердить заказ
+				</label>
+				<br><br>
+			</div>
+		</form>
+	</div>
+</div>
+{% endblock %}

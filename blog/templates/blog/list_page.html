@@ -1,0 +1,24 @@
+{% load el_pagination_tags %}
+
+{% paginate 16 products %}
+
+
+
+  <div class="row">
+    {% for product in products %}
+    <div class="col s6 m3 full-width-device">
+      <div class="card">
+        <div class="card-image">
+          <img src="{% if product.image %}{{ product.image.url }}{% endif %}"  height="300px">
+          <a href="{{ product.get_absolute_url }}" class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">add</i></a>
+        </div>
+        <div class="card-content">
+          <span class="card-title">{{ product.name }}</span>
+          <p>{{ product.price}} BYN.</p>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+<center>{% show_more "More" "Loading..." %}</center>

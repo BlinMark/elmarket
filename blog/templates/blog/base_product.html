@@ -1,0 +1,37 @@
+
+{% extends 'blog/new-base.html' %}
+
+{% block content %}
+	<div class="col s12 m7 margin-40px">
+    <div class="card horizontal card-product">
+
+
+      <div class="card-image no-img">
+        <img src="{% if product.image %}{{ product.image.url }}{% else %}{% endif %}"  width="" height=""class="no-img">
+      </div>
+
+
+      <div class="card-stacked">
+				<h2 class="header text-center">{{ product.name }}</h2>
+				<a href="{{ product.category.get_absolute_url }}" class="text-center">{{ product.category }}</a>
+        <div class="card-content">
+          <p class="text-center">Какое-то описание</p>
+					<p class="text-center price-align">Price: {{ product.price}} BYN</p>
+        </div>
+        <div class="card-action">
+					<form action="{% url "cart:CartAdd" product.id %}" method="post">
+						<div id="submitButtons">
+							<p class="noView">{{ cart_product_form }}</p>
+					    {% csrf_token %}
+							<input type="submit"  id="addToCart" value="Добавить в корзину">
+					    <label class="waves-effect waves-light btn red darken-2" for="addToCart" onclick="Materialize.toast('{{ product.name }} добавлен(а) в карзину', 4000)">
+					      Add to cart
+					    </label>
+							<a href="{% url 'blog:ProductList' %}" class="waves-effect waves-light btn red darken-2 float-right">Catalog</a>
+						</div>
+					</form>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock content %}

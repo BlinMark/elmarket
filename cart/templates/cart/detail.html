@@ -1,0 +1,69 @@
+﻿{% extends "blog/new-base.html" %}
+{% load widget_tweaks %}
+{% block title %}
+  Ваша корзина товаров
+{% endblock %}
+
+{% block content %}
+<div class="row">
+  <div class="card darken-1 full-width defoult-bg">
+    <div class="card-content white-text">
+      <span class="card-title center">
+        {% if cart.cupon %}
+        Price without sale {{ cart.get_total_price }}
+        "{{ cart.cupon.code }}" купон на ({{ cart.cupon.discount }} % ниже)
+        - {{ cart.get_discount|floatformat:"2" }} BYN
+        {% endif %}<br>
+        Total price {{ cart.get_total_price_after_discount|floatformat:"2" }} BYN
+</span>
+<p>Use cupon</p>
+<form action="{% url "cupon:apply" %}" method="post" class="add">
+  {% csrf_token %}
+  {{ cupon_apply_form }}
+  <input type="submit" class=""value="Обновить">
+</form>
+      <table class="bordered">
+        <thead>
+          <tr class="color-white">
+            <th>Name</th>
+            <th>Quantity</th>
+            <th></th>
+            <th>Item Price</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in cart %}
+          {% with product=item.product %}
+          <tr>
+            <td>
+              <a href="{{ product.get_absolute_url }}" class="tooltipped color-orange" data-position="right" data-delay="50" data-tooltip="{{ product.image.url }}">{{ product.name }}</a>
+            </td>
+            <td>
+              <form id="update" action="{% url "cart:CartAdd" product.id %}" method="post">
+                {{ item.update_quantity_form.quantity }}
+                {{ item.update_quantity_form.update }}
+                {% csrf_token %}
+                <input class="noView" type="submit" id="refresh" form="update" value="UPDATE">
+                <label class="waves-effect waves-light btn red darken-2" for="refresh">Обновить</label>
+              </form>
+            </td>
+            <td>
+              <a href="{% url "cart:CartRemove" product.id %}" class="color-orange">
+                Remove
+              </a>
+            </td>
+            <td class="color-orange">{{ item.total_price }} BYN</td>
+          </tr>
+          {% endwith %}
+          {% endfor %}
+        </tbody>
+      </table>
+
+    </div>
+    <div class="card-action center">
+      <a href="{% url "blog:ProductList"%}" class="buttonA">Catalog</a>
+      <a href="{% url "orders:OrderCreate" %}" class="buttonA">Order</a>
+    </div>
+  </div>
+</div>
+{% endblock %}
